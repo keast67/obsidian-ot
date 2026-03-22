@@ -1,0 +1,11 @@
+{
+    "default": "houston",
+    "location": {
+        "houston": {
+            "name": "Houston",
+            "lat": "29.7633",
+            "lon": "-95.3633",
+            "tz": "America%2FChicago"
+        }
+    }
+}
