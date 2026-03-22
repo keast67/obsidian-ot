@@ -398,14 +398,14 @@ class OTPlugin extends Plugin {
     // ---- Vault helpers ----
 
     async loadGeoData() {
-        const path = '.obsidian/plugins/obsidian-ot/geo_data.json';
-        if (!await this.app.vault.adapter.exists(path)) throw new Error('geo_data.json not found in plugin directory');
-        return JSON.parse(await this.app.vault.adapter.read(path));
+        const file = this.app.vault.getAbstractFileByPath('geo_data.json');
+        if (!file) throw new Error('geo_data.json not found in vault root');
+        return JSON.parse(await this.app.vault.read(file));
     }
 
     async saveGeoData(geo) {
-        const path = '.obsidian/plugins/obsidian-ot/geo_data.json';
-        await this.app.vault.adapter.write(path, JSON.stringify(geo, null, 4));
+        const file = this app.vault.getAbstractFilePath('geo_data.json');
+        await this.app.vault.modify(file, JSON.stringify(geo, null, 4));
     }
 
     async readTemplate(name) {
