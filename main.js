@@ -404,7 +404,7 @@ class OTPlugin extends Plugin {
     }
 
     async saveGeoData(geo) {
-        const file = this app.vault.getAbstractFileByPath('geo_data.json');
+        const file = this.app.vault.getAbstractFileByPath('geo_data.json');
         await this.app.vault.modify(file, JSON.stringify(geo, null, 4));
     }
 
