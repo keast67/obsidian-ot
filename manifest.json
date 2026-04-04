@@ -1,7 +1,7 @@
 {
     "id": "obsidian-ot",
     "name": "OT",
-    "version": "0.1.21",
+    "version": "0.1.22",
     "minAppVersion": "1.0.0",
     "description": "Creates daily notes and meeting notes from Apple iCal (iCloud CalDAV) calendar events.",
     "author": "kuni",
