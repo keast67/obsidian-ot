@@ -398,13 +398,13 @@ class OTPlugin extends Plugin {
     // ---- Vault helpers ----
 
     async loadGeoData() {
-        const file = this.app.vault.getAbstractFileByPath('geo_data.json');
-        if (!file) throw new Error('geo_data.json not found in vault root');
+        const file = this.app.vault.getAbstractFileByPath('template/geo_data.md');
+        if (!file) throw new Error('geo_data.md not found in template folder');
         return JSON.parse(await this.app.vault.read(file));
     }
 
     async saveGeoData(geo) {
-        const file = this.app.vault.getAbstractFileByPath('geo_data.json');
+        const file = this.app.vault.getAbstractFileByPath('template/geo_data.md');
         await this.app.vault.modify(file, JSON.stringify(geo, null, 4));
     }
 
