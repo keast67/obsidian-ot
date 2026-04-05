@@ -610,8 +610,9 @@ class SelectEventModal extends Modal {
         super(app);
         this.plugin   = plugin;
         const _d2 = new Date(); this.dateStr = `${_d2.getFullYear()}-${String(_d2.getMonth()+1).padStart(2,'0')}-${String(_d2.getDate()).padStart(2,'0')}`;
-        this.placeKey = null;
-        this.geo      = null;
+        this.placeKey  = null;
+        this.geo       = null;
+        this.overwrite = false;
     }
 
     async onOpen() {
@@ -638,6 +639,10 @@ class SelectEventModal extends Modal {
                 }
                 dd.setValue(this.placeKey).onChange(v => this.placeKey = v);
             });
+
+        new Setting(contentEl)
+            .setName('Overwrite existing files')
+            .addToggle(t => t.setValue(this.overwrite).onChange(v => this.overwrite = v));
 
         this.statusEl = contentEl.createEl('p', { cls: 'ot-status' });
         this.listEl   = contentEl.createEl('div');
@@ -673,7 +678,7 @@ class SelectEventModal extends Modal {
                                 const template = await this.plugin.readTemplate('meeting_template.md');
                                 const path     = `${adjustFileName(ev.day, ev.name)}.md`;
                                 const content  = ev.buildMtgNote(template);
-                                const result   = await this.plugin.writeFile(path, content, false);
+                                const result   = await this.plugin.writeFile(path, content, this.overwrite);
                                 new Notice(`OT: ${path} — ${result}`);
                                 this.statusEl.setText(`${path} — ${result}`);
                             } catch (e) {
