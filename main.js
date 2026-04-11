@@ -384,6 +384,12 @@ class OTPlugin extends Plugin {
             callback: () => new SelectEventModal(this.app, this).open(),
         });
 
+        this.addCommand({
+            id: 'ot-delete-tasks',
+            name: 'Delete Task Section from Daily Note',
+            callback: () => this.deleteTaskSection(),
+        });
+
         this.addSettingTab(new OTSettingTab(this.app, this));
     }
 
@@ -483,6 +489,33 @@ class OTPlugin extends Plugin {
             .filter(e => e.start.dateStr === dateStr)
             .sort((a, b) => (a.start.timeStr ?? '').localeCompare(b.start.timeStr ?? ''))
             .map(e => new OTEvent(e));
+    }
+
+    async deleteTaskSection() {
+        const file = this.app.workspace.getActiveFile();
+        if (!file) {
+            new Notice('OT: No active file.');
+            return;
+        }
+
+        let content = await this.app.vault.read(file);
+
+        // Match the tasks section:
+        //   ---
+        //   Due Today
+        //   ```tasks … ```
+        //   Completed
+        //   ```tasks … ```
+        const taskSectionRe = /\n---\nDue Today\n```tasks\ndue \{\{query\.file\.pathWithoutExtension\}\}\nnot done\nhide toolbar\n```\nCompleted\n```tasks\ndone \{\{query\.file\.pathWithoutExtension\}\}\nhide toolbar\n```(\n|$)/;
+
+        if (!taskSectionRe.test(content)) {
+            new Notice('OT: No task section found in this note.');
+            return;
+        }
+
+        const updated = content.replace(taskSectionRe, '$1');
+        await this.app.vault.modify(file, updated);
+        new Notice('OT: Task section deleted.');
     }
 }
 
