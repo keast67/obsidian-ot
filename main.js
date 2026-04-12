@@ -506,7 +506,7 @@ class OTPlugin extends Plugin {
         //   ```tasks … ```
         //   Completed
         //   ```tasks … ```
-        const taskSectionRe = /\n---\nDue Today\n```tasks\ndue \{\{query\.file\.pathWithoutExtension\}\}\nnot done\nhide toolbar\n```\nCompleted\n```tasks\ndone \{\{query\.file\.pathWithoutExtension\}\}\nhide toolbar\n```(\n|$)/;
+        const taskSectionRe = /\n---\nDue Today\n```.*```\nCompleted\n```.*```(\n|$)/;
 
         if (!taskSectionRe.test(content)) {
             new Notice('OT: No task section found in this note.');

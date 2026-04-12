@@ -41,11 +41,11 @@ All-day events are skipped automatically.
 ## Vault Files Required (not in repo)
 
 The plugin expects these files to exist in the user's Obsidian vault:
-- `geo_data.json` — Array of location objects with `name`, `lat`, `lon`, `timezone` fields
+- `template/geo_data.md` — Array of location objects with `name`, `lat`, `lon`, `timezone` fields in JSON format
 - `template/daily_template.md` — Daily note template with `%WEATHER%`, `%MORNING%`, `%LUNCH%`, `%AFTERNOON%`, `%EVENING%` placeholders
 - `template/meeting_template.md` — Meeting note template
 
-Daily notes are written to `calendar/{YYYY-MM-DD}.md`. Meeting notes go to a path derived from the event name.
+Daily notes are written to `calendar/{YYYY-MM-DD}.md`. Meeting notes go to the root path.
 
 ## External APIs
 
